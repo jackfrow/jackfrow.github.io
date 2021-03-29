@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="iOS,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="事件起因：制作了一个cocoapods库，已经发布成功，但是搜索不出来.删除索引文件并且重新生成也没有用，主要问题就是repos仓库的内容无法更新.  一、简介什么是CocoaPodsCocoaPods是OS X和iOS下的一个第三类库管理工具，通过CocoaPods工具我们可以为项目添加被称为“Pods”的依赖库（这些类库必须是CocoaPods本身所支持的），并且可以轻松管理其版本。 Coc">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2018 最新安装cocoapods.">
+<meta property="og:url" content="http://yoursite.com/2018/04/09/cocoapods/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="事件起因：制作了一个cocoapods库，已经发布成功，但是搜索不出来.删除索引文件并且重新生成也没有用，主要问题就是repos仓库的内容无法更新.  一、简介什么是CocoaPodsCocoaPods是OS X和iOS下的一个第三类库管理工具，通过CocoaPods工具我们可以为项目添加被称为“Pods”的依赖库（这些类库必须是CocoaPods本身所支持的），并且可以轻松管理其版本。 Coc">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1877622-b947ebd8335c8680.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1877622-181805ef89d34a3f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/174">
+<meta property="og:updated_time" content="2021-03-29T09:42:15.254Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2018 最新安装cocoapods.">
+<meta name="twitter:description" content="事件起因：制作了一个cocoapods库，已经发布成功，但是搜索不出来.删除索引文件并且重新生成也没有用，主要问题就是repos仓库的内容无法更新.  一、简介什么是CocoaPodsCocoaPods是OS X和iOS下的一个第三类库管理工具，通过CocoaPods工具我们可以为项目添加被称为“Pods”的依赖库（这些类库必须是CocoaPods本身所支持的），并且可以轻松管理其版本。 Coc">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1877622-b947ebd8335c8680.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/09/cocoapods/">
+
+
+
+
+
+  <title>2018 最新安装cocoapods. | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/09/cocoapods/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jackfrow">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">2018 最新安装cocoapods.</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-09T22:46:49+08:00">
+                2018-04-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>事件起因：制作了一个cocoapods库，已经发布成功，但是搜索不出来.删除索引文件并且重新生成也没有用，主要问题就是repos仓库的内容无法更新.</p>
+</blockquote>
+<h1 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h1><h1 id="什么是CocoaPods"><a href="#什么是CocoaPods" class="headerlink" title="什么是CocoaPods"></a>什么是CocoaPods</h1><p>CocoaPods是OS X和iOS下的一个第三类库管理工具，通过CocoaPods工具我们可以为项目添加被称为“Pods”的依赖库（这些类库必须是CocoaPods本身所支持的），并且可以轻松管理其版本。</p>
+<p>CocoaPods的好处</p>
+<p>1、在引入第三方库时它可以自动为我们完成各种各样的配置，包括配置编译阶段、连接器选项、甚至是ARC环境下的-fno-objc-arc配置等。</p>
+<p>2、使用CocoaPods可以很方便地查找新的第三方库，这些类库是比较“标准的”，而不是网上随便找到的，这样可以让我们找到真正好用的类库。</p>
+<h1 id="二、Cocoapods安装步骤"><a href="#二、Cocoapods安装步骤" class="headerlink" title="二、Cocoapods安装步骤"></a>二、Cocoapods安装步骤</h1><h2 id="1、升级Ruby环境"><a href="#1、升级Ruby环境" class="headerlink" title="1、升级Ruby环境"></a>1、升级Ruby环境</h2><blockquote>
+<p>终端输入：$ gem update –system</p>
+</blockquote>
+<p>若提示没有权限，</p>
+<blockquote>
+<p>这时应该输入：$ sudo gem update –system</p>
+</blockquote>
+<h2 id="2、更换Ruby镜像"><a href="#2、更换Ruby镜像" class="headerlink" title="2、更换Ruby镜像"></a>2、更换Ruby镜像</h2><p>首先移除现有的Ruby镜像</p>
+<blockquote>
+<p>终端输入：$ gem sources –remove<a href="https://rubygems.org/" target="_blank" rel="noopener">https://rubygems.org/</a></p>
+</blockquote>
+<p>然后添加国内最新镜像源（淘宝的Ruby镜像已经不更新了）</p>
+<blockquote>
+<p>终端输入：$ gem sources -a<a href="https://gems.ruby-china.org/" target="_blank" rel="noopener">https://gems.ruby-china.org/</a></p>
+</blockquote>
+<p>执行完毕之后输入gem sources -l来查看当前镜像</p>
+<blockquote>
+<p>终端输入：$ gem sources -l</p>
+</blockquote>
+<p>如果结果是</p>
+<p><strong>* CURRENT SOURCES *</strong></p>
+<p><a href="https://gems.ruby-china.org/" target="_blank" rel="noopener">https://gems.ruby-china.org/</a></p>
+<p>说明添加成功，否则继续执行$ gem source -a  <a href="https://gems.ruby-china.org/来添加" target="_blank" rel="noopener">https://gems.ruby-china.org/来添加</a></p>
+<h2 id="3、安装CocoaPods"><a href="#3、安装CocoaPods" class="headerlink" title="3、安装CocoaPods"></a>3、安装CocoaPods</h2><p>接下来开始安装</p>
+<blockquote>
+<p>终端输入：$ sudo gem install cocoapods</p>
+</blockquote>
+<p>如果提示没有权限:</p>
+<blockquote>
+<p>终端输入：$ sudo gem install -n /usr/local/bin cocoapods</p>
+</blockquote>
+<p>安装完成之后再执行pod setup（PS：这个过程是漫长的，要有耐心,如果你是黑人脸的话，那基本就停在这了）</p>
+<blockquote>
+<p>终端输入：$ pod setup</p>
+</blockquote>
+<h2 id="4-pod-setup无法执行解决方案"><a href="#4-pod-setup无法执行解决方案" class="headerlink" title="4.pod setup无法执行解决方案"></a>4.pod setup无法执行解决方案</h2><h3 id="4-1-安装国内镜像源-但是目前没有找到国内仍在维护的镜像源"><a href="#4-1-安装国内镜像源-但是目前没有找到国内仍在维护的镜像源" class="headerlink" title="4.1 安装国内镜像源(但是目前没有找到国内仍在维护的镜像源)"></a>4.1 安装国内镜像源(但是目前没有找到国内仍在维护的镜像源)</h3><blockquote>
+<p>pod repo remove master</p>
+</blockquote>
+<blockquote>
+<p>pod repo add master <a href="https://git.coding.net/CocoaPods/Specs.git" target="_blank" rel="noopener">https://git.coding.net/CocoaPods/Specs.git</a></p>
+</blockquote>
+<blockquote>
+<p>pod repo update</p>
+</blockquote>
+<h3 id="4-2-使用git-把镜像源克隆下来，然后放到-cocoapods-repos"><a href="#4-2-使用git-把镜像源克隆下来，然后放到-cocoapods-repos" class="headerlink" title="4.2 使用git 把镜像源克隆下来，然后放到~/.cocoapods/repos"></a>4.2 使用git 把镜像源克隆下来，然后放到~/.cocoapods/repos</h3><blockquote>
+<p>git clone <a href="https://github.com/CocoaPods/Specs" target="_blank" rel="noopener">https://github.com/CocoaPods/Specs</a></p>
+</blockquote>
+<h3 id="4-3-从浏览器-https-github-com-CocoaPods-Specs-下载"><a href="#4-3-从浏览器-https-github-com-CocoaPods-Specs-下载" class="headerlink" title="4.3 从浏览器 https://github.com/CocoaPods/Specs 下载."></a>4.3 从浏览器 <a href="https://link.jianshu.com/?t=https://github.com/CocoaPods/Specs" target="_blank" rel="noopener">https://github.com/CocoaPods/Specs</a> 下载.</h3><p><img src="https://upload-images.jianshu.io/upload_images/1877622-b947ebd8335c8680.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
+<p>zip下载方式.png</p>
+<p>使用ZIP下载的方式下载下来文件，解压到repos目录.</p>
+<h3 id="4-4-如果你有同事的话，找他拷贝一份-cocoapods-repos目录下的文件（这种方法最轻松！！）"><a href="#4-4-如果你有同事的话，找他拷贝一份-cocoapods-repos目录下的文件（这种方法最轻松！！）" class="headerlink" title="4.4 如果你有同事的话，找他拷贝一份~/.cocoapods/repos目录下的文件（这种方法最轻松！！）"></a>4.4 如果你有同事的话，找他拷贝一份~/.cocoapods/repos目录下的文件（这种方法最轻松！！）</h3><p>之后 只需要cd ~/.cocoapods/repos/master路径，执行一步(如果.git不存在的话)</p>
+<blockquote>
+<p>​    git init</p>
+</blockquote>
+<h3 id="4-5-使用github客户端进行下载镜像源-博主目前就使用的这种方式，感觉十分好用"><a href="#4-5-使用github客户端进行下载镜像源-博主目前就使用的这种方式，感觉十分好用" class="headerlink" title="4.5 使用github客户端进行下载镜像源(博主目前就使用的这种方式，感觉十分好用)"></a>4.5 使用github客户端进行下载镜像源(博主目前就使用的这种方式，感觉十分好用)</h3><p><img src="https://upload-images.jianshu.io/upload_images/1877622-181805ef89d34a3f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/174" alt="img"></p>
+<p>github客户端</p>
+<p>至此你的电脑上已经能够正常使用cocoapods了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/28/imags/" rel="next" title="风景">
+                <i class="fa fa-chevron-left"></i> 风景
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/29/年度总结/" rel="prev" title="2018年度总结">
+                2018年度总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">jackfrow</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、简介"><span class="nav-number">1.</span> <span class="nav-text">一、简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是CocoaPods"><span class="nav-number">2.</span> <span class="nav-text">什么是CocoaPods</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Cocoapods安装步骤"><span class="nav-number">3.</span> <span class="nav-text">二、Cocoapods安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、升级Ruby环境"><span class="nav-number">3.1.</span> <span class="nav-text">1、升级Ruby环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、更换Ruby镜像"><span class="nav-number">3.2.</span> <span class="nav-text">2、更换Ruby镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、安装CocoaPods"><span class="nav-number">3.3.</span> <span class="nav-text">3、安装CocoaPods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-pod-setup无法执行解决方案"><span class="nav-number">3.4.</span> <span class="nav-text">4.pod setup无法执行解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-安装国内镜像源-但是目前没有找到国内仍在维护的镜像源"><span class="nav-number">3.4.1.</span> <span class="nav-text">4.1 安装国内镜像源(但是目前没有找到国内仍在维护的镜像源)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-使用git-把镜像源克隆下来，然后放到-cocoapods-repos"><span class="nav-number">3.4.2.</span> <span class="nav-text">4.2 使用git 把镜像源克隆下来，然后放到~/.cocoapods/repos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-从浏览器-https-github-com-CocoaPods-Specs-下载"><span class="nav-number">3.4.3.</span> <span class="nav-text">4.3 从浏览器 https://github.com/CocoaPods/Specs 下载.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-如果你有同事的话，找他拷贝一份-cocoapods-repos目录下的文件（这种方法最轻松！！）"><span class="nav-number">3.4.4.</span> <span class="nav-text">4.4 如果你有同事的话，找他拷贝一份~/.cocoapods/repos目录下的文件（这种方法最轻松！！）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-使用github客户端进行下载镜像源-博主目前就使用的这种方式，感觉十分好用"><span class="nav-number">3.4.5.</span> <span class="nav-text">4.5 使用github客户端进行下载镜像源(博主目前就使用的这种方式，感觉十分好用)</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jackfrow</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

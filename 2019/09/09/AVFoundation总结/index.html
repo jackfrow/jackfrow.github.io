@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="iOS,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="框架简介 AVFoundation是iOS中用于处理音视频的框架，主要提供的功能有，视屏播放，视屏录制，以及视屏编辑等功能。  概念介绍AVAsset AVAsset是AVFoundation框架中抽象类，用来表示音频或者视屏资源,是一组音视频资源的类型,其中比较重要的属性有duration（持续时间）,tracks（资源轨道）。  1let asset = AVAsset(url: url)">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AVFoundation总结">
+<meta property="og:url" content="http://yoursite.com/2019/09/09/AVFoundation总结/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="框架简介 AVFoundation是iOS中用于处理音视频的框架，主要提供的功能有，视屏播放，视屏录制，以及视屏编辑等功能。  概念介绍AVAsset AVAsset是AVFoundation框架中抽象类，用来表示音频或者视屏资源,是一组音视频资源的类型,其中比较重要的属性有duration（持续时间）,tracks（资源轨道）。  1let asset = AVAsset(url: url)">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6gy1g6wo934s59j30kf05vjrq.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6gy1g72g8fm2u4j30l50e3jw0.jpg">
+<meta property="og:updated_time" content="2021-03-29T09:42:15.252Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AVFoundation总结">
+<meta name="twitter:description" content="框架简介 AVFoundation是iOS中用于处理音视频的框架，主要提供的功能有，视屏播放，视屏录制，以及视屏编辑等功能。  概念介绍AVAsset AVAsset是AVFoundation框架中抽象类，用来表示音频或者视屏资源,是一组音视频资源的类型,其中比较重要的属性有duration（持续时间）,tracks（资源轨道）。  1let asset = AVAsset(url: url)">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/006y8mN6gy1g6wo934s59j30kf05vjrq.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/09/AVFoundation总结/">
+
+
+
+
+
+  <title>AVFoundation总结 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/09/AVFoundation总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jackfrow">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AVFoundation总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-09T10:42:49+08:00">
+                2019-09-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习总结/" itemprop="url" rel="index">
+                    <span itemprop="name">学习总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="框架简介"><a href="#框架简介" class="headerlink" title="框架简介"></a>框架简介</h4><blockquote>
+<p>AVFoundation是iOS中用于处理音视频的框架，主要提供的功能有，视屏播放，视屏录制，以及视屏编辑等功能。</p>
+</blockquote>
+<h4 id="概念介绍"><a href="#概念介绍" class="headerlink" title="概念介绍"></a>概念介绍</h4><h5 id="AVAsset"><a href="#AVAsset" class="headerlink" title="AVAsset"></a>AVAsset</h5><blockquote>
+<p>AVAsset是AVFoundation框架中抽象类，用来表示音频或者视屏资源,是一组音视频资源的类型,其中比较重要的属性有duration（持续时间）,tracks（资源轨道）。</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> asset = <span class="type">AVAsset</span>(url: url)</span><br></pre></td></tr></table></figure>
+
+<h5 id="AVPlayer"><a href="#AVPlayer" class="headerlink" title="AVPlayer"></a>AVPlayer</h5><blockquote>
+<p>An object that provides the interface to control the player’s transport behavior.</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> player = <span class="type">AVPlayer</span>(playerItem: &lt;#<span class="type">T</span>##<span class="type">AVPlayerItem?</span>#&gt;)<span class="comment">//初始化</span></span><br><span class="line"> player.seek(to: <span class="type">CMTime</span>.zero) <span class="comment">//跳转到播放位置</span></span><br><span class="line"> player.play()<span class="comment">//开始播放</span></span><br><span class="line"> player.pause()<span class="comment">//暂停</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="AVPlayerItem"><a href="#AVPlayerItem" class="headerlink" title="AVPlayerItem"></a>AVPlayerItem</h5><blockquote>
+<p>该类主要是用于管理资源对象，提供播放数据源，旨在表示由AVPlayer播放的资产的呈现状态，并允许观察该状态，它控制着视频从创建到销毁的诸多状态。</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> playItem = <span class="type">AVPlayerItem</span>(asset: &lt;#<span class="type">T</span>##<span class="type">AVAsset</span>#&gt;)</span><br></pre></td></tr></table></figure>
+
+<h5 id="AVPlayerLayer"><a href="#AVPlayerLayer" class="headerlink" title="AVPlayerLayer"></a>AVPlayerLayer</h5><blockquote>
+<p>用于显示视频内容，相当于大屏幕。里面有videoGravity，默认值 AVLayerVideoGravityResizeAspect.</p>
+</blockquote>
+<h5 id="AVAssetTrack"><a href="#AVAssetTrack" class="headerlink" title="AVAssetTrack"></a>AVAssetTrack</h5><blockquote>
+<p>AVAssetTrack是资源轨道，用于获取AVAsset中的资源，并加以处理</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取视屏资源中的视屏轨道(视屏交叉部分就会有多条轨道,这里只取第一条)</span></span><br><span class="line"><span class="keyword">guard</span> <span class="keyword">let</span> assetTrack = asset.tracks(withMediaType: .video).first <span class="keyword">else</span> &#123;<span class="keyword">continue</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>多条轨道与显示的关系：</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6wo934s59j30kf05vjrq.jpg" alt="DC9D6C74-F6D8-4D71-8456-7673C2F6353F"></p>
+<h5 id="AVVideoCompositionInstruction"><a href="#AVVideoCompositionInstruction" class="headerlink" title="AVVideoCompositionInstruction"></a>AVVideoCompositionInstruction</h5><blockquote>
+<p>可以用作每段处理视屏的指令。</p>
+</blockquote>
+<h5 id="AVVideoCompositionLayerInstruction"><a href="#AVVideoCompositionLayerInstruction" class="headerlink" title="AVVideoCompositionLayerInstruction"></a>AVVideoCompositionLayerInstruction</h5><blockquote>
+<p>用于显示界面的layer层,上图中可以看到1.2共存的部分,便会有多个LayerInstruction,就是一个资源中有多个轨道,并且轨道相交的部分就会产生多个LayerInstruction。</p>
+</blockquote>
+<h5 id="AVAssetExportSession"><a href="#AVAssetExportSession" class="headerlink" title="AVAssetExportSession"></a>AVAssetExportSession</h5><blockquote>
+<p>针对AVAsset源对象的内容进行转码，创建一个被指定输出形式的资源。</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MARK: - 导出合成的视频</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">export</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">let</span> session = <span class="type">AVAssetExportSession</span>.<span class="keyword">init</span>(asset: compostion.copy() <span class="keyword">as</span>! <span class="type">AVAsset</span>, presetName: <span class="type">AVAssetExportPreset1920x1080</span>)</span><br><span class="line">    </span><br><span class="line">    session?.outputURL = <span class="type">JRVideoEditor</span>.createTemplateFileURL()</span><br><span class="line">    session?.outputFileType = <span class="type">AVFileType</span>.mp4</span><br><span class="line">    session?.videoComposition = videoComposition</span><br><span class="line">    </span><br><span class="line">    session?.exportAsynchronously(completionHandler: &#123;[<span class="keyword">weak</span> <span class="keyword">self</span>] <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> strongSelf = <span class="keyword">self</span> <span class="keyword">else</span> &#123;<span class="keyword">return</span>&#125;</span><br><span class="line">        <span class="keyword">let</span> status = session?.status</span><br><span class="line">        <span class="keyword">if</span> status == <span class="type">AVAssetExportSession</span>.<span class="type">Status</span>.completed &#123;</span><br><span class="line">            strongSelf.saveToAlbum(atURL: session!.outputURL!, complete: &#123; (success) <span class="keyword">in</span></span><br><span class="line">                <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">                   strongSelf.showSaveResult(isSuccess: success)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+</blockquote>
+<h5 id="AVMutableComposition"><a href="#AVMutableComposition" class="headerlink" title="AVMutableComposition"></a>AVMutableComposition</h5><blockquote>
+<p>AVAsset的子类，可以用来新建视屏轨道，音频轨道，提取出资源中音频资源，视屏资源。</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> composition = <span class="type">AVMutableComposition</span>()</span><br><span class="line"><span class="comment">//新建一条视屏轨道</span></span><br><span class="line"> <span class="keyword">guard</span> <span class="keyword">let</span> trackA = compostion.addMutableTrack(withMediaType: .video, preferredTrackID: trackId) <span class="keyword">else</span> &#123;<span class="keyword">return</span>&#125;</span><br><span class="line"><span class="comment">//提取视屏资源</span></span><br><span class="line"><span class="keyword">let</span> videoComposition = <span class="type">AVMutableVideoComposition</span>(propertiesOf: composition)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g72g8fm2u4j30l50e3jw0.jpg" alt="AVFoundation编辑结构图"></p>
+<h4 id="实战场景"><a href="#实战场景" class="headerlink" title="实战场景"></a>实战场景</h4><h5 id="视屏播放"><a href="#视屏播放" class="headerlink" title="视屏播放"></a>视屏播放</h5><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">guard</span> <span class="keyword">let</span> string = <span class="type">Bundle</span>.main.path(forResource: <span class="string">"01_nebula"</span>, ofType: <span class="string">"mp4"</span>)<span class="keyword">else</span>&#123;</span><br><span class="line">     <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> url = <span class="type">URL</span>(fileURLWithPath: string)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> asset = <span class="type">AVAsset</span>(url: url)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> playItem = <span class="type">AVPlayerItem</span>(asset: asset)</span><br><span class="line"></span><br><span class="line">   player = <span class="type">AVPlayer</span>(playerItem: playItem)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> layer = <span class="type">AVPlayerLayer</span>(player: player)</span><br><span class="line">  </span><br><span class="line">  layer.frame = view.bounds</span><br><span class="line">  </span><br><span class="line">  view.layer.addSublayer(layer)</span><br><span class="line">  </span><br><span class="line">  player.play()</span><br></pre></td></tr></table></figure>
+
+<h5 id="视屏拼接"><a href="#视屏拼接" class="headerlink" title="视屏拼接"></a>视屏拼接</h5><p>视屏拼接主要需要一条视频轨道用来存放视屏资源的数据。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">buildVideoTrack</span><span class="params">()</span></span>  &#123;</span><br><span class="line">       </span><br><span class="line">       <span class="comment">//使用invalid，系统会自动分配一个有效的trackId</span></span><br><span class="line">       <span class="keyword">let</span> trackId = kCMPersistentTrackID_Invalid</span><br><span class="line">       </span><br><span class="line">       <span class="keyword">guard</span> <span class="keyword">let</span> track = composition.addMutableTrack(withMediaType: .video, preferredTrackID: trackId) <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="keyword">return</span></span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//视频片段插入时间轴时的起始点</span></span><br><span class="line">       <span class="keyword">var</span> cursorTime = <span class="type">CMTime</span>.zero</span><br><span class="line">       </span><br><span class="line">       <span class="keyword">for</span> asset <span class="keyword">in</span> videos &#123;</span><br><span class="line">            <span class="comment">//获取视频资源中的视频轨道</span></span><br><span class="line">           <span class="keyword">guard</span> <span class="keyword">let</span> assetTrack = asset.tracks(withMediaType: .video).first <span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="keyword">continue</span></span><br><span class="line">           &#125;</span><br><span class="line">           </span><br><span class="line">           <span class="keyword">do</span> &#123;</span><br><span class="line">               <span class="keyword">try</span> track.insertTimeRange(<span class="type">CMTimeRange</span>(start: .zero, duration: asset.duration), of: assetTrack, at: cursorTime)</span><br><span class="line">               <span class="comment">//光标移动到视频末尾处，以便插入下一段视频</span></span><br><span class="line">                 cursorTime = <span class="type">CMTimeAdd</span>(cursorTime, asset.duration)</span><br><span class="line">           &#125; <span class="keyword">catch</span>  &#123;</span><br><span class="line">               <span class="built_in">print</span>(<span class="string">"insert error"</span>)</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="添加水印-amp-添加动画"><a href="#添加水印-amp-添加动画" class="headerlink" title="添加水印&amp;添加动画"></a>添加水印&amp;添加动画</h5><p>要想对视屏资源进行添加效果，主要是需要对AVMutableVideoComposition的animationTool属性进行处理。</p>
+<blockquote>
+<p>水印代码</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 1 - Set up the text layer</span></span><br><span class="line">    <span class="keyword">let</span> subtitle1Text = <span class="type">CATextLayer</span>()</span><br><span class="line">    subtitle1Text.font = <span class="string">"Helvetica-Bold"</span> <span class="keyword">as</span> <span class="type">CFTypeRef</span></span><br><span class="line">    subtitle1Text.fontSize = <span class="number">36</span></span><br><span class="line">    subtitle1Text.frame = <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: size.width, height: <span class="number">100</span>)</span><br><span class="line">    subtitle1Text.string = <span class="string">"jackfrow"</span></span><br><span class="line">    subtitle1Text.alignmentMode = .center</span><br><span class="line">    subtitle1Text.foregroundColor = <span class="type">UIColor</span>.white.cgColor</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2 - The usual overlay</span></span><br><span class="line">    <span class="keyword">let</span> overlayLayer = <span class="type">CALayer</span>()</span><br><span class="line">    overlayLayer.addSublayer(subtitle1Text)</span><br><span class="line">    overlayLayer.frame = <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: size.width, height: size.height)</span><br><span class="line">    overlayLayer.masksToBounds = <span class="literal">true</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> parentLayer = <span class="type">CALayer</span>()</span><br><span class="line">    <span class="keyword">let</span> videoLayer = <span class="type">CALayer</span>()</span><br><span class="line">    </span><br><span class="line">    parentLayer.frame = <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: size.width, height: size.height)</span><br><span class="line">    videoLayer.frame = <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: size.width, height: size.height)</span><br><span class="line">    </span><br><span class="line">    parentLayer.addSublayer(videoLayer)</span><br><span class="line">    parentLayer.addSublayer(overlayLayer)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 3 - apply magic</span></span><br><span class="line">    composition.animationTool = <span class="type">AVVideoCompositionCoreAnimationTool</span>(postProcessingAsVideoLayer: videoLayer, <span class="keyword">in</span>: parentLayer)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>动画代码</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.overlay</span></span><br><span class="line">      <span class="keyword">let</span> animationImage = <span class="type">UIImage</span>(named: <span class="string">"star.png"</span>)</span><br><span class="line">      <span class="keyword">let</span> overlayLayer1 = <span class="type">CALayer</span>()</span><br><span class="line">      overlayLayer1.contents = animationImage?.cgImage</span><br><span class="line">      overlayLayer1.frame = <span class="type">CGRect</span>(x: size.width/<span class="number">2</span> - <span class="number">64</span>, y: size.height/<span class="number">2</span> + <span class="number">200</span>, width:<span class="number">128</span>, height: <span class="number">128</span>)</span><br><span class="line">      overlayLayer1.masksToBounds = <span class="literal">true</span></span><br><span class="line">      </span><br><span class="line">      <span class="keyword">let</span> overlayLayer2 = <span class="type">CALayer</span>()</span><br><span class="line">      overlayLayer2.contents = animationImage?.cgImage</span><br><span class="line">      overlayLayer2.frame = <span class="type">CGRect</span>(x: size.width/<span class="number">2</span> - <span class="number">64</span> , y: size.height/<span class="number">2</span> - <span class="number">200</span>, width: <span class="number">128</span>, height: <span class="number">128</span>)</span><br><span class="line">      overlayLayer2.masksToBounds = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//2.3 - Twinkle</span></span><br><span class="line">    <span class="keyword">let</span> animationScale = <span class="type">CABasicAnimation</span>(keyPath: <span class="string">"transform.scale"</span>)</span><br><span class="line">          animationScale.duration = <span class="number">1.0</span></span><br><span class="line">          animationScale.repeatCount = <span class="number">5</span></span><br><span class="line">          animationScale.autoreverses = <span class="literal">true</span></span><br><span class="line">           <span class="comment">//  // animate from half size to full size</span></span><br><span class="line">    animationScale.fromValue = <span class="type">NSNumber</span>(floatLiteral: <span class="number">0.5</span>)</span><br><span class="line">    animationScale.toValue = <span class="type">NSNumber</span>(floatLiteral: <span class="number">1.0</span>)</span><br><span class="line">    animationScale.beginTime = <span class="type">AVCoreAnimationBeginTimeAtZero</span></span><br><span class="line">      </span><br><span class="line">    overlayLayer1.add(animationScale, forKey: <span class="string">"scale"</span>)</span><br><span class="line">    overlayLayer2.add(animationScale, forKey: <span class="string">"scale"</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//3 - Composition</span></span><br><span class="line">    <span class="keyword">let</span> parentLayer = <span class="type">CALayer</span>()</span><br><span class="line">    <span class="keyword">let</span> videoLayer = <span class="type">CALayer</span>()</span><br><span class="line">    parentLayer.frame = <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: size.width, height: size.height)</span><br><span class="line">    videoLayer.frame = <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: size.width, height: size.height)</span><br><span class="line">    parentLayer.addSublayer(videoLayer)</span><br><span class="line">    parentLayer.addSublayer(overlayLayer1)</span><br><span class="line">    parentLayer.addSublayer(overlayLayer2)</span><br><span class="line">    </span><br><span class="line">    composition.animationTool = <span class="type">AVVideoCompositionCoreAnimationTool</span>(postProcessingAsVideoLayer: videoLayer, <span class="keyword">in</span>: parentLayer)</span><br></pre></td></tr></table></figure>
+
+<h5 id="过渡效果"><a href="#过渡效果" class="headerlink" title="过渡效果"></a>过渡效果</h5><p>一段视屏资源播放出来主要是由它在视屏资源轨道中资源来决定的，效果类似于上图。</p>
+<p>所以要想实现视屏的过渡效果，主要是需要多条视屏轨道交叉播放，然后对轨道交叉部分做一定的处理，就可以实现视屏的过渡效果。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">///创建两条相交的视屏轨道  </span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">buildCompositionVideoTracks</span><span class="params">()</span></span>  &#123;</span><br><span class="line">       <span class="comment">//使用invalid，系统会自动分配一个有效的trackId</span></span><br><span class="line">        <span class="keyword">let</span> trackId = kCMPersistentTrackID_Invalid</span><br><span class="line">        <span class="comment">//创建AB两条视频轨道，视频片段交叉插入到轨道中，通过对两条轨道的叠加编辑各种效果。如0-5秒内，A轨道内容alpha逐渐到0，B轨道内容alpha逐渐到1</span></span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> trackA = composition.addMutableTrack(withMediaType: .video, preferredTrackID: trackId) <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> trackB = composition.addMutableTrack(withMediaType: .video, preferredTrackID: trackId) <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> videoTracks = [trackA,trackB]</span><br><span class="line">     <span class="comment">//视频片段插入时间轴时的起始点</span></span><br><span class="line">        <span class="keyword">var</span> cursorTime = <span class="type">CMTime</span>.zero</span><br><span class="line">        <span class="comment">//转场动画时间</span></span><br><span class="line">        <span class="keyword">let</span> transitionDuration = <span class="type">CMTime</span>(value: <span class="number">2</span>, timescale: <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">for</span> (index,value) <span class="keyword">in</span> assets.enumerated() &#123;</span><br><span class="line">            <span class="comment">//交叉循环A，B轨道</span></span><br><span class="line">            <span class="keyword">let</span> trackIndex = index % <span class="number">2</span></span><br><span class="line">            <span class="keyword">let</span> currentTrack = videoTracks[trackIndex]</span><br><span class="line">            <span class="comment">//获取视频资源中的视频轨道</span></span><br><span class="line">            <span class="keyword">guard</span> <span class="keyword">let</span> assetTrack = value.tracks(withMediaType: .video).first <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                <span class="comment">//插入提取的视频轨道到 空白(编辑)轨道的指定位置中</span></span><br><span class="line">                <span class="keyword">try</span> currentTrack.insertTimeRange(<span class="type">CMTimeRange</span>(start: .zero, duration: value.duration), of: assetTrack, at: cursorTime)</span><br><span class="line">                <span class="comment">//光标移动到视频末尾处，以便插入下一段视频</span></span><br><span class="line">                cursorTime = <span class="type">CMTimeAdd</span>(cursorTime, value.duration)</span><br><span class="line">                <span class="comment">//光标回退转场动画时长的距离，这一段前后视频重叠部分组合成转场动画</span></span><br><span class="line">                cursorTime = <span class="type">CMTimeSubtract</span>(cursorTime, transitionDuration)</span><br><span class="line">            &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/// 设置转场动画</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">setupTransition</span><span class="params">(<span class="keyword">for</span> instruction: AVMutableVideoCompositionInstruction, fromLayer: AVMutableVideoCompositionLayerInstruction, toLayer: AVMutableVideoCompositionLayerInstruction ,type: TransitionType)</span></span> &#123;</span><br><span class="line">        <span class="keyword">let</span> identityTransform = <span class="type">CGAffineTransform</span>.identity</span><br><span class="line">        <span class="keyword">let</span> timeRange = instruction.timeRange</span><br><span class="line">        <span class="keyword">let</span> videoWidth = <span class="keyword">self</span>.videoComposition.renderSize.width</span><br><span class="line">        <span class="keyword">if</span> type == <span class="type">TransitionType</span>.<span class="type">Push</span>&#123;</span><br><span class="line">            <span class="keyword">let</span> fromEndTranform = <span class="type">CGAffineTransform</span>(translationX: -videoWidth, y: <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">let</span> toStartTranform = <span class="type">CGAffineTransform</span>(translationX: videoWidth, y: <span class="number">0</span>)</span><br><span class="line">            </span><br><span class="line">            fromLayer.setTransformRamp(fromStart: identityTransform, toEnd: fromEndTranform, timeRange: timeRange)</span><br><span class="line">            toLayer.setTransformRamp(fromStart: toStartTranform, toEnd: identityTransform, timeRange: timeRange)</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            fromLayer.setOpacityRamp(fromStartOpacity: <span class="number">1.0</span>, toEndOpacity: <span class="number">0.0</span>, timeRange: timeRange)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//重新赋值</span></span><br><span class="line">        instruction.layerInstructions = [fromLayer,toLayer]</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h5><p><a href="https://github.com/jackfrow/AVFoundationDemo" target="_blank" rel="noopener">AVFoundationDemo</a></p>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><ul>
+<li><a href="http://zichao.me/2016/03/28/视频开发总结/" target="_blank" rel="noopener">AVFoundation视屏开发总结</a></li>
+<li><a href="https://juejin.im/post/5bee688ae51d45313b1ac683" target="_blank" rel="noopener">LearningAVFoundation之视频合成+转场过渡动画</a></li>
+<li><a href="https://objccn.io/issue-23-1/" target="_blank" rel="noopener"><strong>在 iOS 上捕获视频</strong></a></li>
+<li><a href="https://www.raywenderlich.com/5135-how-to-play-record-and-merge-videos-in-ios-and-swift" target="_blank" rel="noopener">How to Play, Record, and Merge Videos in iOS and Swift</a></li>
+<li><a href="https://www.raywenderlich.com/2734-avfoundation-tutorial-adding-overlays-and-animations-to-videos" target="_blank" rel="noopener">AVFoundation Tutorial: Adding Overlays and Animations to Videos</a></li>
+<li><a href="https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/00_Introduction.html#//apple_ref/doc/uid/TP40010188" target="_blank" rel="noopener">AVFoundation Programming Guide</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/30/TPKeyboardAvoiding源码解析/" rel="next" title="TPKeyboardAvoiding源码解析">
+                <i class="fa fa-chevron-left"></i> TPKeyboardAvoiding源码解析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/31/Runtime总结/" rel="prev" title="runtime总结">
+                runtime总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">jackfrow</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#框架简介"><span class="nav-number">1.</span> <span class="nav-text">框架简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#概念介绍"><span class="nav-number">2.</span> <span class="nav-text">概念介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#AVAsset"><span class="nav-number">2.1.</span> <span class="nav-text">AVAsset</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AVPlayer"><span class="nav-number">2.2.</span> <span class="nav-text">AVPlayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AVPlayerItem"><span class="nav-number">2.3.</span> <span class="nav-text">AVPlayerItem</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AVPlayerLayer"><span class="nav-number">2.4.</span> <span class="nav-text">AVPlayerLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AVAssetTrack"><span class="nav-number">2.5.</span> <span class="nav-text">AVAssetTrack</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AVVideoCompositionInstruction"><span class="nav-number">2.6.</span> <span class="nav-text">AVVideoCompositionInstruction</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AVVideoCompositionLayerInstruction"><span class="nav-number">2.7.</span> <span class="nav-text">AVVideoCompositionLayerInstruction</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AVAssetExportSession"><span class="nav-number">2.8.</span> <span class="nav-text">AVAssetExportSession</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AVMutableComposition"><span class="nav-number">2.9.</span> <span class="nav-text">AVMutableComposition</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实战场景"><span class="nav-number">3.</span> <span class="nav-text">实战场景</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#视屏播放"><span class="nav-number">3.1.</span> <span class="nav-text">视屏播放</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#视屏拼接"><span class="nav-number">3.2.</span> <span class="nav-text">视屏拼接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#添加水印-amp-添加动画"><span class="nav-number">3.3.</span> <span class="nav-text">添加水印&amp;添加动画</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#过渡效果"><span class="nav-number">3.4.</span> <span class="nav-text">过渡效果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Demo"><span class="nav-number">3.5.</span> <span class="nav-text">Demo</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考链接"><span class="nav-number">4.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jackfrow</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
